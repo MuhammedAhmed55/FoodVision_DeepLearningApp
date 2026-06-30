@@ -190,38 +190,6 @@ Loss steadily decreased over 30 epochs
 
 Model reached peak performance at epoch 28
 
-🏗️ System Architecture
-text
-┌─────────────────────────────────────────────────────────────────┐
-│                         Frontend (Next.js 14)                  │
-│  ┌────────────┐  ┌────────────┐  ┌────────────┐              │
-│  │   Upload   │  │  Predict   │  │  History   │              │
-│  │   Image    │──▶│   Result   │  │    Grid    │              │
-│  └────────────┘  └────────────┘  └────────────┘              │
-└─────────────────────────┬─────────────────────────────────────┘
-                          │
-                          ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     Backend (FastAPI)                          │
-│  ┌────────────┐  ┌────────────┐  ┌────────────┐              │
-│  │  /predict  │  │  /history  │  │  /profile  │              │
-│  │   Endpoint │  │  Endpoint  │  │  Endpoint  │              │
-│  └────────────┘  └────────────┘  └────────────┘              │
-│                          │                                     │
-│                 ┌────────▼────────┐                           │
-│                 │  Model Service  │                           │
-│                 │   (PyTorch)     │                           │
-│                 └─────────────────┘                           │
-└─────────────────────────┬─────────────────────────────────────┘
-                          │
-                          ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                         Services                               │
-│  ┌────────────┐  ┌────────────┐  ┌────────────┐              │
-│  │  Supabase  │  │  Database  │  │  Storage   │              │
-│  │   (Auth)   │  │ (Postgres) │  │  (Images)  │              │
-│  └────────────┘  └────────────┘  └────────────┘              │
-└─────────────────────────────────────────────────────────────────┘
 🎨 Tech Stack
 Frontend
 Technology	Purpose	Version
@@ -382,69 +350,6 @@ API Docs: http://localhost:8000/docs
 
 Supabase Studio: https://app.supabase.com
 
-📁 Project Structure
-text
-FoodVisionAI/
-├── backend/                          # FastAPI Backend
-│   ├── app/
-│   │   ├── api/
-│   │   │   ├── endpoints/
-│   │   │   │   ├── predict.py      # Prediction endpoint
-│   │   │   │   ├── history.py      # History endpoints
-│   │   │   │   └── profile.py      # Profile endpoints
-│   │   │   └── __init__.py
-│   │   ├── core/
-│   │   │   ├── config.py           # Configuration
-│   │   │   └── database.py         # Database connection
-│   │   ├── models/
-│   │   │   ├── food_classifier.py  # Model loading & inference
-│   │   │   └── schemas.py          # Pydantic schemas
-│   │   └── utils/
-│   │       ├── image_processing.py # Image preprocessing
-│   │       └── supabase_client.py  # Supabase client
-│   ├── experiments/                 # Training notebooks
-│   │   ├── 01_data_exploration.ipynb
-│   │   ├── 02_model_training.ipynb
-│   │   └── 03_model_evaluation.ipynb
-│   ├── models/                      # Trained models
-│   │   └── efficientnet_b0_food.pth
-│   ├── requirements.txt
-│   ├── main.py                      # FastAPI entry point
-│   └── .env
-│
-├── frontend/                         # Next.js Frontend
-│   ├── app/
-│   │   ├── (auth)/
-│   │   │   ├── login/
-│   │   │   └── signup/
-│   │   ├── (dashboard)/
-│   │   │   ├── dashboard/
-│   │   │   ├── history/
-│   │   │   └── settings/
-│   │   ├── api/                     # API routes
-│   │   ├── layout.tsx
-│   │   └── page.tsx
-│   ├── components/
-│   │   ├── ui/                      # shadcn/ui components
-│   │   └── common/                  # Custom components
-│   ├── lib/
-│   │   ├── supabase/
-│   │   │   ├── client.ts           # Supabase client
-│   │   │   └── server.ts           # Server client
-│   │   ├── utils.ts
-│   │   └── types.ts
-│   ├── public/
-│   ├── styles/
-│   │   └── globals.css
-│   ├── package.json
-│   ├── tailwind.config.ts
-│   ├── next.config.js
-│   └── .env.local
-│
-├── docker-compose.yml               # Docker setup
-├── .gitignore
-├── README.md                        # This file
-└── LICENSE
 🔄 API Endpoints
 Backend API (FastAPI)
 Method	Endpoint	Description	Auth
